@@ -12,7 +12,7 @@ class ShiyanlouScrapy(scrapy.Spider):
     def parse(self,response):
         for url in response.xpath('//*[@id="user-repositories-list"]/ul/li'):
             yield {
-                "name":url.xpath("a/text()").extract(),
-                "update_time":url.xpath("/div[3]/@relative-time").extract()
+                "name":url.xpath(".//a/text()").extract_first().strip(),
+                "update_time":url.xpath(".//div[3]/relative-time/@datetime").re_first("(\S+)")
             }
 
